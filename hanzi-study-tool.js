@@ -121,9 +121,9 @@ class WritingBox {
     }
 }
 
-hanzi = ["水議a","不不不不","可","思","議"];
-notes = ["seui", "bat", "ho", "something", "something else"]
-hanziIndex = 0;
+var hanzi = ["水議a","不不不不","可","思","議"];
+var notes = ["seui", "bat", "ho", "something", "something else"]
+var hanziIndex = 0;
 var writingAreas = [];
 processHanzi();
 
