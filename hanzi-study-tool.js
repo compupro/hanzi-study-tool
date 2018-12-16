@@ -71,6 +71,7 @@ class WritingBox {
     }
 
     redraw(){
+        $("hanziToggle").innerHTML = "Show hanzi";
         this.showingHanzi = false;
         this.gfxCtx.clearRect(0, 0, this.gfxCtx.canvas.width, this.gfxCtx.canvas.height); // Clears the canvas
         
@@ -142,11 +143,10 @@ function newInput(){
     writingAreas = []
     var input = $("input").value;
     for (const line of input.split("\n")){
-        delimiterPos = line.indexOf(": ");
+        delimiterPos = line.indexOf(":");
         hanzi.push(line.slice(0, delimiterPos));
-        notes.push(line.slice(delimiterPos+2))
+        notes.push(line.slice(delimiterPos+1))
     }
-    $("hanziToggle").innerHTML = "Show hanzi";
     hideModal();
     processHanzi();
 }
