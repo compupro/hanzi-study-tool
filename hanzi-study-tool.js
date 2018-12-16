@@ -1,8 +1,20 @@
 /*Utility functions*/
 
+//jQuery-like alias for the stupidly long function name
+function $(elemId){
+    return document.getElementById(elemId);
+}
+
 //Use this so negative n doesn't return negative answer
 function mod(n, m) {
     return ((n % m) + m) % m;
+}
+
+//Generates a unique ID number that hasn't been used this session
+var idCounter = 0;
+function newId(){
+    idCounter++;
+    return idCounter;
 }
 
 class WritingBox {
@@ -11,8 +23,8 @@ class WritingBox {
     
     elemId: The id of the <canvas> element*/
     constructor(elemId, hanzi){
-        this.writingArea = document.getElementById(elemId);
-        this.gfxCtx = writingArea.getContext("2d");
+        this.writingArea = $(elemId);
+        this.gfxCtx = this.writingArea.getContext("2d");
 
         this.clickX = [];
         this.clickY = [];
@@ -23,7 +35,7 @@ class WritingBox {
         
         var self = this;
         
-        writingArea.addEventListener("mousedown", function(e){
+        this.writingArea.addEventListener("mousedown", function(e){
             var mouseX = e.pageX - this.offsetLeft;
             var mouseY = e.pageY - this.offsetTop;
             
@@ -32,7 +44,7 @@ class WritingBox {
             self.redraw();
         });
 
-        writingArea.addEventListener("mousemove", function(e){
+        this.writingArea.addEventListener("mousemove", function(e){
             if (self.writing){
                 var mouseX = e.pageX - this.offsetLeft;
                 var mouseY = e.pageY - this.offsetTop;
@@ -42,11 +54,11 @@ class WritingBox {
             }
         });
 
-        writingArea.addEventListener("mouseup", function(e){
+        this.writingArea.addEventListener("mouseup", function(e){
             self.writing = false;
         });
 
-        writingArea.addEventListener("mouseLeave", function(e){
+        this.writingArea.addEventListener("mouseLeave", function(e){
             self.writing = false;
         });
     }
@@ -102,29 +114,43 @@ class WritingBox {
     }
 }
 
-hanzi = ["水","不","可","思","議"];
+hanzi = ["水議a","不不不不","可","思","議"];
 notes = ["seui", "bat", "ho", "something", "something else"]
 hanziIndex = 0;
-w = new WritingBox("writingArea", hanzi[hanziIndex]);
-var notesElem = document.getElementById("notes");
-note = document.createTextNode(notes[hanziIndex]);
-notesElem.appendChild(note);
+var writingAreas = [];
+processHanzi();
 
 function nextHanzi(){
     hanziIndex++;
-    newHanziCanvas();
+    processHanzi();
 }
 
 function prevHanzi(){
     hanziIndex--;
-    newHanziCanvas();
+    processHanzi();
 }
 
-function newHanziCanvas(){
-    w = new WritingBox("writingArea", hanzi[mod(hanziIndex,hanzi.length)]);
+function processHanzi(){
+    $("writingAreaContainer").innerHTML = "";
+    for (const character of hanzi[mod(hanziIndex,hanzi.length)]){
+        var canvas = document.createElement("canvas");
+        canvas.id = newId();
+        canvas.width = 200;
+        canvas.height = 200;
+        canvas.style.border = "1px solid black";
+        
+        $("writingAreaContainer").appendChild(canvas);
+        writingAreas.push(new WritingBox(canvas.id, character));
+    }
     
-    notesElem = document.getElementById("notes");
+    notesElem = $("notes");
     notesElem.innerHTML = ""
     note = document.createTextNode(notes[mod(hanziIndex, notes.length)]);
     notesElem.appendChild(note);
+}
+
+function showHanzi(){
+    for (const writingArea of writingAreas){
+        writingArea.showHanzi();
+    }
 }
