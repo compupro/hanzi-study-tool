@@ -1,17 +1,29 @@
 <html lang="zh">
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="index.css" />
     </head>
     <body>
+        <div id="modal">
+            <div id="modalContent">
+                <span id="modalClose" onclick="hideModal()">&times;</span>
+                <p>Enter words and the note that displays in the form <code>word: note</code> then click the "Submit" button.</p>
+                
+                <p>You can use multiple characters in the word (e.g. <code>你好: Hello</code>)</p>
+                <textarea id="input">你: (nǐ) You&#10;好:  (hǎo) Good&#10;你好: Hello</textarea>
+                <button onclick="newInput()">Submit</button>
+            </div>
+        </div>
         <div>
             <div id="writingAreaContainer">
             </div>
             <br>
             <div id="notes"></div>
         </div>
-        <button onclick="prevHanzi()">previous word</button>
-        <button onclick="nextHanzi()">next word</button>
-        <button id="hanziToggle" onclick="toggleHanzi()">show hanzi</button>
+        <button onclick="prevHanzi()">Previous word</button>
+        <button onclick="nextHanzi()">Next word</button>
+        <button id="hanziToggle" onclick="toggleHanzi()">Show hanzi</button>
+        <button onclick="showModal()">Load new study set</button>
         <script type="text/javascript" src="hanzi-study-tool.js"></script>
     </body>
 </html>

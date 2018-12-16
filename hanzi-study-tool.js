@@ -121,11 +121,35 @@ class WritingBox {
     }
 }
 
-var hanzi = ["水議a","不不不不","可","思","議"];
-var notes = ["seui", "bat", "ho", "something", "something else"]
+function hideModal(){
+    $("modal").style.display = "none";
+}
+
+function showModal(){
+    $("modal").style.display = "block";
+}
+
+var hanzi = ["佔位符"];
+var notes = ["You haven't submitted any words to study yet!"]
 var hanziIndex = 0;
 var writingAreas = [];
-processHanzi();
+processHanzi()
+
+function newInput(){
+    hanzi = [];
+    notes = [];
+    hanziIndex = 0;
+    writingAreas = []
+    var input = $("input").value;
+    for (const line of input.split("\n")){
+        delimiterPos = line.indexOf(": ");
+        hanzi.push(line.slice(0, delimiterPos));
+        notes.push(line.slice(delimiterPos+2))
+    }
+    $("hanziToggle").innerHTML = "Show hanzi";
+    hideModal();
+    processHanzi();
+}
 
 function nextHanzi(){
     hanziIndex++;
@@ -159,10 +183,10 @@ function processHanzi(){
 function toggleHanzi(){
     for (const writingArea of writingAreas){
         if (writingArea.showingHanzi){
-            $("hanziToggle").innerHTML = "show hanzi";
+            $("hanziToggle").innerHTML = "Show hanzi";
             writingArea.hideHanzi();
         } else {
-            $("hanziToggle").innerHTML = "hide hanzi";
+            $("hanziToggle").innerHTML = "Hide hanzi";
             writingArea.showHanzi();
         }
     }
