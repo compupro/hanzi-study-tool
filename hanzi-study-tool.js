@@ -31,6 +31,7 @@ class WritingBox {
         this.clickDrag = [];
         this.writing;
         this.hanzi = hanzi;
+        this.showingHanzi = false;
         this.redraw();
         
         var self = this;
@@ -70,6 +71,7 @@ class WritingBox {
     }
 
     redraw(){
+        this.showingHanzi = false;
         this.gfxCtx.clearRect(0, 0, this.gfxCtx.canvas.width, this.gfxCtx.canvas.height); // Clears the canvas
         
         this.gfxCtx.strokeStyle = "#888888";
@@ -106,11 +108,16 @@ class WritingBox {
     }
     
     showHanzi(){
+        this.showingHanzi = true;
         var fontSize = 200;
         this.gfxCtx.font = fontSize + "px serif";
         this.gfxCtx.textAlign="center";
         this.gfxCtx.fillStyle="rgba(0, 0, 255, 0.5)";
         this.gfxCtx.fillText(this.hanzi, this.gfxCtx.canvas.width/2, this.gfxCtx.canvas.height/2+fontSize/2.75)
+    }
+    
+    hideHanzi(){
+        this.redraw()
     }
 }
 
@@ -149,8 +156,14 @@ function processHanzi(){
     notesElem.appendChild(note);
 }
 
-function showHanzi(){
+function toggleHanzi(){
     for (const writingArea of writingAreas){
-        writingArea.showHanzi();
+        if (writingArea.showingHanzi){
+            $("hanziToggle").innerHTML = "show hanzi";
+            writingArea.hideHanzi();
+        } else {
+            $("hanziToggle").innerHTML = "hide hanzi";
+            writingArea.showHanzi();
+        }
     }
 }
