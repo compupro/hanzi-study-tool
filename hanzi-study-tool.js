@@ -59,7 +59,7 @@ class WritingBox {
             self.writing = false;
         });
 
-        this.writingArea.addEventListener("mouseLeave", function(e){
+        this.writingArea.addEventListener("mouseleave", function(e){
             self.writing = false;
         });
     }
