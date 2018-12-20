@@ -164,14 +164,23 @@ function prevHanzi(){
 function processHanzi(){
     $("writingAreaContainer").innerHTML = "";
     for (const character of hanzi[mod(hanziIndex,hanzi.length)]){
+        var canvasWrapper = document.createElement("div");
+        canvasWrapper.classList.add("canvasWrapper");
         var canvas = document.createElement("canvas");
         canvas.id = newId();
         canvas.width = 200;
         canvas.height = 200;
         canvas.style.border = "1px solid black";
+        canvasWrapper.appendChild(canvas);
+        $("writingAreaContainer").appendChild(canvasWrapper);
+        var box = new WritingBox(canvas.id, character);
+        writingAreas.push(box);
         
-        $("writingAreaContainer").appendChild(canvas);
-        writingAreas.push(new WritingBox(canvas.id, character));
+        var clearButton = document.createElement("div");
+        clearButton.classList.add("clearButton");
+        clearButton.addEventListener("click", function(e){box.clearWritingArea()});
+        canvasWrapper.appendChild(clearButton);
+                
     }
     
     notesElem = $("notes");
