@@ -163,7 +163,9 @@ function prevHanzi(){
 
 function processHanzi(){
     $("writingAreaContainer").innerHTML = "";
-    for (const character of hanzi[mod(hanziIndex,hanzi.length)]){
+    writingAreas = [];
+    for (var i = 0; i < hanzi[mod(hanziIndex,hanzi.length)].length; i++){
+        character = hanzi[mod(hanziIndex,hanzi.length)][i]
         var canvasWrapper = document.createElement("div");
         canvasWrapper.classList.add("canvasWrapper");
         var canvas = document.createElement("canvas");
@@ -177,10 +179,12 @@ function processHanzi(){
         writingAreas.push(box);
         
         var clearButton = document.createElement("div");
+        clearButton.setAttribute("data-canvasIndex", i);
         clearButton.classList.add("clearButton");
-        clearButton.addEventListener("click", function(e){box.clearWritingArea()});
+        clearButton.addEventListener("click", function(e){
+            writingAreas[parseInt(e.target.getAttribute("data-canvasIndex"))].clearWritingArea();
+            });
         canvasWrapper.appendChild(clearButton);
-                
     }
     
     notesElem = $("notes");
