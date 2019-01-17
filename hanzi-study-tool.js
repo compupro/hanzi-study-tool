@@ -37,6 +37,8 @@ class WritingBox {
         var self = this;
         
         this.writingArea.addEventListener("mousedown", function(e){
+            window.getSelection().removeAllRanges();
+            
             var mouseX = e.pageX - this.offsetLeft;
             var mouseY = e.pageY - this.offsetTop;
             
@@ -163,15 +165,28 @@ function prevHanzi(){
 
 function processHanzi(){
     $("writingAreaContainer").innerHTML = "";
-    for (const character of hanzi[mod(hanziIndex,hanzi.length)]){
+    writingAreas = [];
+    for (var i = 0; i < hanzi[mod(hanziIndex,hanzi.length)].length; i++){
+        character = hanzi[mod(hanziIndex,hanzi.length)][i]
+        var canvasWrapper = document.createElement("div");
+        canvasWrapper.classList.add("canvasWrapper");
         var canvas = document.createElement("canvas");
         canvas.id = newId();
         canvas.width = 200;
         canvas.height = 200;
         canvas.style.border = "1px solid black";
+        canvasWrapper.appendChild(canvas);
+        $("writingAreaContainer").appendChild(canvasWrapper);
+        var box = new WritingBox(canvas.id, character);
+        writingAreas.push(box);
         
-        $("writingAreaContainer").appendChild(canvas);
-        writingAreas.push(new WritingBox(canvas.id, character));
+        var clearButton = document.createElement("div");
+        clearButton.setAttribute("data-canvasIndex", i);
+        clearButton.classList.add("clearButton");
+        clearButton.addEventListener("click", function(e){
+            writingAreas[parseInt(e.target.getAttribute("data-canvasIndex"))].clearWritingArea();
+            });
+        canvasWrapper.appendChild(clearButton);
     }
     
     notesElem = $("notes");

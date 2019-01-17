@@ -2,7 +2,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 2;
     width: 100%;
     height: 100%;
     background-color: rgba(0,0,0,0.5);
@@ -29,6 +29,49 @@
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+#writingAreaCOntainer {
+    display: flex;
+    width: 200px;
+    height: 200px;
+}
+
+.clearButton {
+    width: 0;
+	height: 0;
+	border-left: 25px solid transparent;
+	border-bottom: 25px solid #D00;
+    
+    position: relative;
+    bottom: 25px;
+    left: 177px;
+    z-index: 1;
+    
+    cursor: pointer
+}
+
+.clearButton:hover {
+    animation: clearButtonRollover .15s forwards;
+}
+
+@keyframes clearButtonRollover {
+    from {
+        border-left: 25px solid transparent;
+        border-bottom: 25px solid #D00;
+        bottom: 25px;
+        left: 177px;
+    } to {
+        border-left: 50px solid transparent;
+        border-bottom: 50px solid #D00;
+        bottom: 50px;
+        left: 152px;
+    }
+}
+
+.canvasWrapper {
+    margin-right: 10px;
+    cursor: crosshair;
 }
 
 textarea {
