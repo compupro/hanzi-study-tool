@@ -37,6 +37,8 @@ class WritingBox {
         var self = this;
         
         this.writingArea.addEventListener("mousedown", function(e){
+            window.getSelection().removeAllRanges();
+            
             var mouseX = e.pageX - this.offsetLeft;
             var mouseY = e.pageY - this.offsetTop;
             

@@ -47,6 +47,8 @@
     bottom: 25px;
     left: 177px;
     z-index: 1;
+    
+    cursor: pointer
 }
 
 .clearButton:hover {
@@ -69,6 +71,7 @@
 
 .canvasWrapper {
     margin-right: 10px;
+    cursor: crosshair;
 }
 
 textarea {
